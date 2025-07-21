@@ -1,4 +1,3 @@
-
 let data = JSON.parse(localStorage.getItem('baccarat_data')) || [];
 
 let currentInput = {
@@ -19,9 +18,7 @@ function addRecord() {
         return;
     }
 
-    const newRecord = {
-        ...currentInput
-    };
+    const newRecord = { ...currentInput };
     data.unshift(newRecord);
     localStorage.setItem('baccarat_data', JSON.stringify(data));
     renderTable();
@@ -42,7 +39,7 @@ function renderTable() {
             <td>${item.eye2}</td>
             <td>${item.eye3}</td>
             <td>${item.outcome}</td>
-            <td>P=${stat.P}, B=${stat.B}</td>
+            <td>P=${stat.P}, B=${stat.B} <button onclick="deleteRecord(${index})">🗑️</button></td>
         </tr>`;
         tbody.innerHTML += row;
     });
@@ -67,6 +64,14 @@ function calculateStat(target) {
     return { P, B };
 }
 
+function deleteRecord(index) {
+    if (confirm("คุณต้องการลบข้อมูลแถวนี้หรือไม่?")) {
+        data.splice(index, 1);
+        localStorage.setItem('baccarat_data', JSON.stringify(data));
+        renderTable();
+    }
+}
+
 function downloadData() {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -77,5 +82,26 @@ function downloadData() {
     URL.revokeObjectURL(url);
 }
 
-// Render table on load
+function uploadData(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const uploadedData = JSON.parse(e.target.result);
+            if (Array.isArray(uploadedData)) {
+                data = uploadedData;
+                localStorage.setItem('baccarat_data', JSON.stringify(data));
+                renderTable();
+            } else {
+                alert("รูปแบบไฟล์ไม่ถูกต้อง");
+            }
+        } catch (err) {
+            alert("เกิดข้อผิดพลาดในการอ่านไฟล์");
+        }
+    };
+    reader.readAsText(file);
+}
+
+// แสดงข้อมูลล่าสุดบนสุดเสมอ
 renderTable();
