@@ -8,8 +8,15 @@ let currentInput = {
     outcome: ''
 };
 
+let searchKeyword = '';
+
 function setInput(field, value) {
     currentInput[field] = value;
+}
+
+function setSearch(value) {
+    searchKeyword = value.trim();
+    renderTable();
 }
 
 function addRecord() {
@@ -32,6 +39,11 @@ function renderTable() {
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
     data.forEach((item, index) => {
+        // รวมข้อมูล 5 ช่องเป็นสตริงเดียวกัน เช่น "B🔴🔵🔴P"
+        const fullKey = `${item.result}${item.eye1}${item.eye2}${item.eye3}${item.outcome}`;
+        if (searchKeyword && !fullKey.includes(searchKeyword)) {
+            return; // ข้ามถ้าไม่ตรงคำค้น
+        }
         const stat = calculateStat(item, index);
         const row = `<tr>
             <td>${item.result}</td>
