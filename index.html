@@ -35,6 +35,10 @@
         <button onclick="downloadData()">💾 บันทึกข้อมูล</button>
         <input type="file" onchange="uploadData(event)" />
         <button onclick="viewHistory()">📂 ดูย้อนหลัง</button>
+
+        <br><br>
+        <label>ค้นหา (พิมพ์เช่น B🔴🔵🔴P): </label>
+        <input type="text" placeholder="พิมพ์คำค้น" oninput="setSearch(this.value)" />
     </div>
 
     <table id="recordTable">
