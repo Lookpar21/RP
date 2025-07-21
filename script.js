@@ -35,46 +35,37 @@ function viewHistory() {
     renderTable();
 }
 
+function calculateStat(target) {
+    let count = 0;
+    const key = `${target.result}${target.eye1}${target.eye2}${target.eye3}${target.outcome}`;
+    for (let i = 0; i < data.length; i++) {
+        const currentKey = `${data[i].result}${data[i].eye1}${data[i].eye2}${data[i].eye3}${data[i].outcome}`;
+        if (currentKey === key) {
+            count++;
+        }
+    }
+    return count;
+}
+
 function renderTable() {
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
     data.forEach((item, index) => {
-        // รวมข้อมูล 5 ช่องเป็นสตริงเดียวกัน เช่น "B🔴🔵🔴P"
         const fullKey = `${item.result}${item.eye1}${item.eye2}${item.eye3}${item.outcome}`;
         if (searchKeyword && !fullKey.includes(searchKeyword)) {
-            return; // ข้ามถ้าไม่ตรงคำค้น
+            return; // ข้ามแถวที่ไม่ตรงคำค้น
         }
-        const stat = calculateStat(item, index);
+        const stat = calculateStat(item);
         const row = `<tr>
             <td>${item.result}</td>
             <td>${item.eye1}</td>
             <td>${item.eye2}</td>
             <td>${item.eye3}</td>
             <td>${item.outcome}</td>
-            <td>P=${stat.P}, B=${stat.B} <button onclick="deleteRecord(${index})">🗑️</button></td>
+            <td>${fullKey}  ${stat} ครั้ง <button onclick="deleteRecord(${index})">🗑️</button></td>
         </tr>`;
         tbody.innerHTML += row;
     });
-}
-
-function calculateStat(target, targetIndex) {
-    let P = 0, B = 0;
-    for (let i = 0; i < data.length; i++) {
-        if (i === targetIndex) continue;
-
-        const current = data[i];
-
-        if (
-            current.eye1 === target.eye1 &&
-            current.eye2 === target.eye2 &&
-            current.eye3 === target.eye3 &&
-            current.outcome === target.outcome
-        ) {
-            if (current.result === 'P') P++;
-            if (current.result === 'B') B++;
-        }
-    }
-    return { P, B };
 }
 
 function deleteRecord(index) {
@@ -90,7 +81,7 @@ function downloadData() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'baccarat_data.json';
+    a.download = 'baccarat_data.json.bak'; // เปลี่ยนนามสกุลไฟล์เป็น .bak
     a.click();
     URL.revokeObjectURL(url);
 }
