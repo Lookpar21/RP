@@ -32,7 +32,7 @@ function renderTable() {
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
     data.forEach((item, index) => {
-        const stat = calculateStat(item); // ✅ ไม่ต้องส่ง index แล้ว
+        const stat = calculateStat(item, index);
         const row = `<tr>
             <td>${item.result}</td>
             <td>${item.eye1}</td>
@@ -45,14 +45,14 @@ function renderTable() {
     });
 }
 
-function calculateStat(target) {
+function calculateStat(target, targetIndex) {
     let P = 0, B = 0;
     for (let i = 0; i < data.length; i++) {
+        if (i === targetIndex) continue;
+
         const current = data[i];
 
-        // ✅ เทียบ 5 ช่องทั้งหมดให้ตรงกัน
         if (
-            current.result === target.result &&
             current.eye1 === target.eye1 &&
             current.eye2 === target.eye2 &&
             current.eye3 === target.eye3 &&
@@ -104,5 +104,4 @@ function uploadData(event) {
     reader.readAsText(file);
 }
 
-// แสดงข้อมูลล่าสุดบนสุดเสมอ
 renderTable();
