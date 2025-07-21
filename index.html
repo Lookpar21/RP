@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>Baccarat Stats Recorder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>📊 บันทึกและวิเคราะห์ผลบาคาร่า</h1>
+    <div class="input-section">
+        <label>ผลจริง:</label>
+        <button onclick="setInput('result','P')">P</button>
+        <button onclick="setInput('result','B')">B</button>
+        <button onclick="setInput('result','T')">T</button>
+
+        <label>เค้า1:</label>
+        <button onclick="setInput('eye1','🔴')">🔴</button>
+        <button onclick="setInput('eye1','🔵')">🔵</button>
+
+        <label>เค้า2:</label>
+        <button onclick="setInput('eye2','🔴')">🔴</button>
+        <button onclick="setInput('eye2','🔵')">🔵</button>
+
+        <label>เค้า3:</label>
+        <button onclick="setInput('eye3','🔴')">🔴</button>
+        <button onclick="setInput('eye3','🔵')">🔵</button>
+
+        <label>ผลออก:</label>
+        <button onclick="setInput('outcome','P')">P</button>
+        <button onclick="setInput('outcome','B')">B</button>
+        <button onclick="setInput('outcome','T')">T</button>
+
+        <br><br>
+        <button onclick="addRecord()">➕ เพิ่มข้อมูล</button>
+        <button onclick="downloadData()">💾 บันทึกข้อมูล</button>
+        <button onclick="viewHistory()">📂 ดูย้อนหลัง</button>
+    </div>
+
+    <table id="recordTable">
+        <thead>
+            <tr>
+                <th>ผลจริง</th>
+                <th>เค้า1</th>
+                <th>เค้า2</th>
+                <th>เค้า3</th>
+                <th>ผลออก</th>
+                <th>สถิติเคยออก</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+
+    <script src="script.js"></script>
+</body>
+</html>
