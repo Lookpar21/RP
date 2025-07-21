@@ -47,9 +47,8 @@ function renderTable() {
 
 function calculateStat(target) {
     let P = 0, B = 0;
-    for (let i = 0; i < data.length - 1; i++) {
+    for (let i = 0; i < data.length; i++) {
         const current = data[i];
-        const next = data[i + 1];
         if (
             current.result === target.result &&
             current.eye1 === target.eye1 &&
@@ -57,8 +56,8 @@ function calculateStat(target) {
             current.eye3 === target.eye3 &&
             current.outcome === target.outcome
         ) {
-            if (next.outcome === 'P') P++;
-            if (next.outcome === 'B') B++;
+            if (current.result === 'P') P++;
+            if (current.result === 'B') B++;
         }
     }
     return { P, B };
