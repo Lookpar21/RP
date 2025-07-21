@@ -32,7 +32,7 @@ function renderTable() {
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
     data.forEach((item, index) => {
-        const stat = calculateStat(item);
+        const stat = calculateStat(item, index);
         const row = `<tr>
             <td>${item.result}</td>
             <td>${item.eye1}</td>
@@ -45,9 +45,11 @@ function renderTable() {
     });
 }
 
-function calculateStat(target) {
+function calculateStat(target, targetIndex) {
     let P = 0, B = 0;
     for (let i = 0; i < data.length; i++) {
+        if (i === targetIndex) continue; // ❗ ข้ามตัวเอง
+
         const current = data[i];
         if (
             current.result === target.result &&
