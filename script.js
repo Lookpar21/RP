@@ -32,7 +32,7 @@ function renderTable() {
     const tbody = document.getElementById('tableBody');
     tbody.innerHTML = '';
     data.forEach((item, index) => {
-        const stat = calculateStat(item, index);
+        const stat = calculateStat(item); // ✅ ไม่ต้องส่ง index แล้ว
         const row = `<tr>
             <td>${item.result}</td>
             <td>${item.eye1}</td>
@@ -45,12 +45,12 @@ function renderTable() {
     });
 }
 
-function calculateStat(target, targetIndex) {
+function calculateStat(target) {
     let P = 0, B = 0;
     for (let i = 0; i < data.length; i++) {
-        if (i === targetIndex) continue; // ❗ ข้ามตัวเอง
-
         const current = data[i];
+
+        // ✅ เทียบ 5 ช่องทั้งหมดให้ตรงกัน
         if (
             current.result === target.result &&
             current.eye1 === target.eye1 &&
