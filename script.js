@@ -78,7 +78,7 @@ function deleteRecord(index) {
 
 function downloadData() {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
-    saveAs(blob, 'baccarat_data.json'); // saveAs จาก FileSaver.js
+    saveAs(blob, 'baccarat_data.bak'); // เปลี่ยนนามสกุลเป็น .bak เพื่อช่วย iOS
 }
 
 function uploadData(event) {
