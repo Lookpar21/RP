@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Baccarat Stats Recorder</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <h1>📊 บันทึกและวิเคราะห์ผลบาคาร่า</h1>
@@ -30,13 +30,13 @@
         <button onclick="setInput('outcome','B')">B</button>
         <button onclick="setInput('outcome','T')">T</button>
 
-        <br><br>
+        <br /><br />
         <button onclick="addRecord()">➕ เพิ่มข้อมูล</button>
         <button onclick="downloadData()">💾 บันทึกข้อมูล</button>
         <input type="file" onchange="uploadData(event)" />
         <button onclick="viewHistory()">📂 ดูย้อนหลัง</button>
 
-        <br><br>
+        <br /><br />
         <label>ค้นหา (พิมพ์เช่น B🔴🔵🔴P): </label>
         <input type="text" placeholder="พิมพ์คำค้น" oninput="setSearch(this.value)" />
     </div>
@@ -52,10 +52,12 @@
                 <th>สถิติเคยออก</th>
             </tr>
         </thead>
-        <tbody id="tableBody">
-        </tbody>
+        <tbody id="tableBody"></tbody>
     </table>
 
+    <!-- โหลดไลบรารี FileSaver.js ก่อน -->
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <!-- โหลดสคริปต์หลักของคุณ -->
     <script src="script.js"></script>
 </body>
 </html>
