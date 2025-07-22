@@ -24,11 +24,14 @@ function addRecord() {
         alert("กรุณากรอกข้อมูลให้ครบ 5 ช่อง");
         return;
     }
-
     const newRecord = { ...currentInput };
     data.unshift(newRecord);
-    localStorage.setItem('baccarat_data', JSON.stringify(data));
+    saveState();
     renderTable();
+}
+
+function saveState() {
+    localStorage.setItem('baccarat_data', JSON.stringify(data));
 }
 
 function viewHistory() {
@@ -71,14 +74,22 @@ function renderTable() {
 function deleteRecord(index) {
     if (confirm("คุณต้องการลบข้อมูลแถวนี้หรือไม่?")) {
         data.splice(index, 1);
-        localStorage.setItem('baccarat_data', JSON.stringify(data));
+        saveState();
         renderTable();
     }
 }
 
 function downloadData() {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
-    saveAs(blob, 'baccarat_data.bak'); // เปลี่ยนนามสกุลเป็น .bak เพื่อช่วย iOS
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/octet-stream' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'baccarat_data.bak';  // เปลี่ยนนามสกุลเป็น .bak เพื่อ iOS รองรับดีขึ้น
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 }
 
 function uploadData(event) {
@@ -90,7 +101,7 @@ function uploadData(event) {
             const uploadedData = JSON.parse(e.target.result);
             if (Array.isArray(uploadedData)) {
                 data = uploadedData;
-                localStorage.setItem('baccarat_data', JSON.stringify(data));
+                saveState();
                 renderTable();
             } else {
                 alert("รูปแบบไฟล์ไม่ถูกต้อง");
