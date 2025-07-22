@@ -76,8 +76,6 @@ function deleteRecord(index) {
     }
 }
 
-// ต้องเพิ่ม <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script> ใน index.html ด้วย
-
 function downloadData() {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8' });
     saveAs(blob, 'baccarat_data.json'); // saveAs จาก FileSaver.js
